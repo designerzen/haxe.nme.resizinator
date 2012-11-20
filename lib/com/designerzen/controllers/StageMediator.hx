@@ -4,7 +4,7 @@ Usage :
 	
 	- Simply subscribe to the resizeEvent dispatched 
 	- You can create an instance with new StageMediator()
-	- Or access this like a singelton using
+	- Or access this like a singelton using StageMediator.getInstance() or StageMediator.global
 
 * HTML5 Compatible
 
@@ -34,34 +34,36 @@ class StageMediator extends EventDispatcher
 {
 	#if iphone
 	static inline public var DELAY:Int = 50;	
-	#else
+	#elseif flash
+	static inline public var DELAY:Int = 2;	
+	#elseif js
 	static inline public var DELAY:Int = 50;
+	#else
+	static inline public var DELAY:Int = 10;
 	#end
+	
+	// Singleton if required
 	static inline public var global( getInstance, null ):StageMediator;
-	
 	static public var instance:StageMediator;
-	
 	static inline public function getInstance():StageMediator
 	{
 		if ( instance == null ) instance = new StageMediator();
 		return instance;
 	}
 	
-	
-	public var stage:Stage;
+	// Internals
+	private var timeStamp:Int;
 	private var timer:Timer;
 
-	// An easy way to read all dimensions in one
+	// An easy way to read all dimensions in one go
 	public var viewPort:Rectangle;
-	
-	//static inline private var instance:StageMediator;
+	public var stage:Stage;
 	
 	// A simple width / height shortcut 16/9, 4/3, etc.
 	public var aspectRatio ( getAspectRatio, null ) :Float;
 	public var width ( getWidth, null ):Int;
 	public var height ( getHeight, null ):Int;
-	private var timeStamp:Int;
-	// Internals
+	
 	private function getAspectRatio():Float
 	{
 		return viewPort.width / viewPort.height;
@@ -86,11 +88,23 @@ class StageMediator extends EventDispatcher
 		viewPort = new Rectangle( 0, 0, stage.stageWidth, stage.stageHeight );
 		stage.addEventListener( Event.RESIZE, onStageResizing );
 		timer.addEventListener( TimerEvent.TIMER, onStageResized );
-		//instance = this;
 	}
 	
+	/////////////////////////////////////////////////////////////////////////////////////
+	// Tell the world about it!
+	/////////////////////////////////////////////////////////////////////////////////////
+	private function dispatch():Void
+	{
+		viewPort.width = stage.stageWidth;
+		viewPort.height = stage.stageHeight;
+		dispatchEvent( new ResizeEvent( stage.stageWidth, stage.stageHeight ) );		
+	}
+	
+	/////////////////////////////////////////////////////////////////////////////////////
+	// EVENT : On Resize of DIV in html
 	// Stage has been resized... do some checks here to see if the user is still
 	// scaling the screen as no neeed to update it on every frame, only after a delay
+	/////////////////////////////////////////////////////////////////////////////////////
 	private function onStageResizing( event:Event ):Void
 	{
 		// Nothing has changed so no need to do anything
@@ -124,28 +138,18 @@ class StageMediator extends EventDispatcher
 		}else {
 			// wait a very small time to check to see if it is still scaling,
 			// and if so rest the timer
-			
 			timer.reset();
 			timer.start();
 		}
 	}
 	
+	/////////////////////////////////////////////////////////////////////////////////////
+	// EVENT : On completed time checks - safe to resize!
+	/////////////////////////////////////////////////////////////////////////////////////
 	private function onStageResized(  event:TimerEvent  ):Void
 	{
 		timeStamp = Lib.getTimer();
-		// set internals only if they have changed...
-		//if ( (viewPort.width != stage.stageWidth)||( viewPort.height != stage.stageHeight ) )
-		//{
-			dispatch();
-			timer.stop();
-		//}
-	}
-	
-	// Tell the world about it!
-	private function dispatch():Void
-	{
-		viewPort.width = stage.stageWidth;
-		viewPort.height = stage.stageHeight;
-		dispatchEvent( new ResizeEvent( stage.stageWidth, stage.stageHeight ) );		
+		dispatch();
+		timer.stop();
 	}
 }

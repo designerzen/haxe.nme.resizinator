@@ -79,9 +79,6 @@ NME.Embed =
 		// Expand the options from config
 		this.options.map( config );
 		
-		// Create the data node if does not already exist and add to body
-		var node = '<div class="flexible" id="'+this.options.id+'" style="width:100%; height:100%" data-framerate="60"></div>';
-		var trace = '<!-- <div id="haxe:trace" style="position:absolute; z-index:2147483647;"></div> -->';
 		
 		// Degrade if no canvas support 
 		var useFlash = !this.canvasSupported() ;//|| SWFObject.getQueryParamValue("flash");
@@ -89,7 +86,35 @@ NME.Embed =
 		// Over-ride
 		if ( this.options.forceFlash ) useFlash = true;
 		
+		/*
+		Add this node to the tree if it doesn't already exist!
+		<!-- <div id="haxe:trace" style="position: absolute; z-index: 2147483647;"></div>-->
+		<div class="flexible" id="haxe:jeash" style="width:100%; height:100%" data-framerate="60"></div> 
+		*/
+		// Create the data node if does not already exist and add to body
+		var div = document.getElementById( this.options.id );
+		if ( div == undefined )
+		{
+			//'<!-- <div id="haxe:trace" style="position:absolute; z-index:2147483647;"></div> -->';
+			if ( !useFlash ) 
+			{
+				var trace = document.createElement("div");
+				trace.setAttribute("id","haxe:trace");
+				trace.setAttribute("class","trace");
+				this.body.insertBefore( trace, this.body.firstChild );//trace.setAttribute("style","position:absolute; z-index:2147483647;");
+			}
+			
+			var app = document.createElement("div");
+			app.setAttribute("style","width:100%; height:100%");
+			app.setAttribute("class","flexible");
+			app.setAttribute("data-framerate","60");
+			app.setAttribute("id",this.options.id);
+			
+			this.body.insertBefore( app, this.body.firstChild );
+		}
+		
 		// Log
+		this.log( "Embed > does div exist? "+div );
 		this.log( "Embed > is canvas supported? "+this.canvasSupported() );
 		this.log( "Embed > using "+( useFlash ? 'Flash' : 'Jeash' )+" with "+this.options );
 		

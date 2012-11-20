@@ -16,9 +16,13 @@ body.fullscreen,html{
 	background:transparent url(../img/loader.gif) no-repeat no-repeat center center;
 }
 
-#haxe{
+#haxe:jeash{
 	display:block;
 	visibility:visible
+}
+
+#haxe:trace{
+	position:absolute; z-index:2147483647;
 }
 
 /* == Added to the app when in fullscreen (bug : should not be concantanated!) */
@@ -29,6 +33,7 @@ html:fullscreen #haxe.resize{
 	background-color: #000000;
 }
 
+ /* == Some background colours  */
 .dark{
 	background-color: #000000;
 }
