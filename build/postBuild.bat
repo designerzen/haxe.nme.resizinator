@@ -3,6 +3,7 @@ set APP_NAME=%1
 
 rem First copy the appropriate files to deploy
 echo Creating directory tree
+DEL %DEPLOY_DIR%\deploy
 XCOPY %DEPLOY_DIR%\src\html %DEPLOY_DIR%\deploy /i /e /t /y
 
 echo Adding support files and dependencies
@@ -20,9 +21,18 @@ rem XCOPY %DEPLOY_DIR%\bin\html5\web\bin\** %DEPLOY_DIR%\deploy /i /y /v
 ROBOCOPY %DEPLOY_DIR%\bin\html5\web\bin\ %DEPLOY_DIR%\deploy *.css *.mp3 *.ogg *.wav *.png *.jpg *.jpeg /E
 XCOPY %DEPLOY_DIR%\bin\html5\web\bin\%APP_NAME%.js %DEPLOY_DIR%\deploy\js /i /y /v
 
+rem Now rename some of the file names
 REN %DEPLOY_DIR%\deploy\css\style.min.css style.css
 REN %DEPLOY_DIR%\deploy\js\%APP_NAME%.js nme.application.js
 REN %DEPLOY_DIR%\deploy\swf\%APP_NAME%.swf nme.application.swf
+
+rem And Minify the Javascript
+echo Shrinking Javascript Files
+haxelib install jsmin
+haxelib run jsmin %DEPLOY_DIR%\deploy\js\nme.embed.js %DEPLOY_DIR%\deploy\js\nme.embed.js
+haxelib run jsmin %DEPLOY_DIR%\deploy\js\nme.fullscreen.js %DEPLOY_DIR%\deploy\js\nme.fullscreen.js
+haxelib run jsmin %DEPLOY_DIR%\deploy\js\nme.application.js %DEPLOY_DIR%\deploy\js\nme.application.js
+
 
 rem then overwrite any that don't already exist into dist
 echo Now updating your distribution...
