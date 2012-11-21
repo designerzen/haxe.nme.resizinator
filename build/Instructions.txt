@@ -1,0 +1,5 @@
+There are two windows .bat scripts that are designed to help you deploy your project.
+
+If you run Flashdevelop 4+, they are already plugged into the build process and so you should not have to run them.
+
+To build your project, simply build versions for flash and for html5 and the resulting project will appear in dist/Project_name

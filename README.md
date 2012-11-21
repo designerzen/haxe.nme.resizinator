@@ -6,6 +6,24 @@ Haxe NME / JEASH Resizinator Suite (with examples)
 This is a simple toolkit to allow you to create Haxe NME projects that resize nicely across platforms.
 It is based around a specially configured FlashDevelop project but it is perfectly compatible with any IDE.
 
+Features
+====================
+
+Make resizing apps with cross platform full screen modes.
+
+Includes a fullscreen mode for Jeash as well as browser based resizing.
+
+* Allows for custom css preloaders before the app is even requested! The class 'preloading' is appended to body and removed when loaded.
+
+* Saves on bandwidth as only the appropriate version is ever loaded into memory (so if flash is loaded, the jeash.js script never gets loaded)
+
+Degrades nicely so that it works in the following order of preference
+
+1. Firstly check to see if your browser can handle the Jeash Version
+2. If not, check to see if flash is enabled via Javascript and is the correct version
+3. If Javascript is not available, we default to flash
+4. If Javascript is available, but canvas and flash are not, append a fail class to the body element
+
 
 Instructions
 ====================

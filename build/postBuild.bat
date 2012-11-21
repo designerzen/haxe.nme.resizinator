@@ -3,7 +3,7 @@ set APP_NAME=%1
 
 rem First copy the appropriate files to deploy
 echo Creating directory tree
-DEL %DEPLOY_DIR%\deploy
+DEL %DEPLOY_DIR%\deploy /q
 XCOPY %DEPLOY_DIR%\src\html %DEPLOY_DIR%\deploy /i /e /t /y
 
 echo Adding support files and dependencies
@@ -28,7 +28,7 @@ REN %DEPLOY_DIR%\deploy\swf\%APP_NAME%.swf nme.application.swf
 
 rem And Minify the Javascript
 echo Shrinking Javascript Files
-haxelib install jsmin
+
 haxelib run jsmin %DEPLOY_DIR%\deploy\js\nme.embed.js %DEPLOY_DIR%\deploy\js\nme.embed.js
 haxelib run jsmin %DEPLOY_DIR%\deploy\js\nme.fullscreen.js %DEPLOY_DIR%\deploy\js\nme.fullscreen.js
 haxelib run jsmin %DEPLOY_DIR%\deploy\js\nme.application.js %DEPLOY_DIR%\deploy\js\nme.application.js
