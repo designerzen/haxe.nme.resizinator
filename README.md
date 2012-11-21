@@ -3,9 +3,28 @@ haxe.nme.resizinator
 
 Haxe NME / JEASH Resizinator Suite (with examples)
 
-See the deploy/ folder for how to set it up.
+This is a simple toolkit to allow you to create Haxe NME projects that resize nicely across platforms.
+It is based around a specially configured FlashDevelop project but it is perfectly compatible with any IDE.
 
-Included is a useful degradation script that allows you to check to see if your app will work with the user's browser and if not it will load in the flash equivalent
+
+Instructions
+====================
+
+Create your application in the src/haxe/ folder 
+
+The easiest way to implement it is by extending FlexibleStage in your main class  and over-riding the resize method like so :
+
+import com.designerzen.views.layout.FlexibleStage;
+class Main extends FlexibleStage
+{
+	override public function resize(stageWidth:Float, stageHeight:Float):Void 
+}
+
+Included in the package is an example html file and an associated css file that is really all you need, but to simplify, improve and streamline your distribution, there is also an embed script written in javascript.
+
+This script (nme.embed.js) is a useful degradation script that allows you to check to see if your app will work with the user's browser and if not it will load in the flash equivalent. In this way, html5 and Jeash are preffered over flash where possible.
+
+See the deploy/ folder for how to set it up.
 
 
 Compilation
