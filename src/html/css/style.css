@@ -1,9 +1,9 @@
 html, body { height:100%; overflow:hidden; width: 100%; height: 100%; min-height:100%}
-body.fullscreen,html{
+body.fullsize, html{
 	padding: 0; margin: 0; 
 }
 
-.fullscreen .flexible{
+.fullsize .flexible{
  	width: 100%; height: 100%;
 	top:0;
 	left:0;
@@ -12,7 +12,7 @@ body.fullscreen,html{
 	display:block
 }
  /* == Added before app loaded to highlight preloading */
-.fullscreen.preloading{
+.fullsize.preloading{
 	background:transparent url(../img/loader.gif) no-repeat no-repeat center center;
 }
 
@@ -30,7 +30,7 @@ body.fullscreen #haxe.resize,
 html:-moz-full-screen #haxe.resize,
 html:-webkit-full-screen #haxe.resize,
 html:fullscreen #haxe.resize{
-	background-color: #000000;
+	/*background-color: #000000;*/
 }
 
  /* == Some background colours  */

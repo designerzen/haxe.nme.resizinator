@@ -15,20 +15,6 @@ if (typeof NME == 'undefined') NME = {};
 NME.FullScreen = 
 {
 	/* == */
-	KeyNames:{
-			8: 'BACKSPACE',
-			9: 'TAB',
-			13: 'ENTER',
-			16: 'SHIFT',
-			27: 'ESCAPE',
-			32: 'SPACE',
-			37: 'LEFT',
-			38: 'UP',
-			39: 'RIGHT',
-			40: 'DOWN'
-	},
-
-	/* == */
 	enter:function ()
 	{
 		var docElm = document.documentElement;
@@ -53,9 +39,9 @@ NME.FullScreen =
 	/* == */
 	monitor:function ( callback )
 	{
-		document.addEventListener("FullScreenchange", callback, false);
-		document.addEventListener("mozFullScreenchange", callback, false);
-		document.addEventListener("webkitFullScreenchange", callback, false);
+		document.addEventListener("FullScreenchange", this.rescope( this, callback ), false);
+		document.addEventListener("mozFullScreenchange", this.rescope( this, callback ), false);
+		document.addEventListener("webkitFullScreenchange", this.rescope( this, callback ), false);
 	},
 
 	/* == */
@@ -73,32 +59,37 @@ NME.FullScreen =
 		if (event.keyCode) keyID = event.keyCode;
 		else if (event.which) keyID = event.which;
 		var character = String.fromCharCode(keyID).toLowerCase();
+		//console.log( 'keypressed '+character+" is it "+this.chosenHotkey );
 		
 		if ( this.isFullscreen )
 		{
 			switch( character )
 			{
+				case "any":
 				case this.chosenHotkey:
-					FullScreen.exit();
+					this.exit();
 					break;
 			}
-
+		
 		}else{
-			
 			switch( character )
 			{
+				case "any":
 				case this.chosenHotkey:
-					FullScreen.enter();
+					this.enter();
 					break;
 			}
 		}
 	},
-
+	
+	rescope:function (scope, fn) {	return function () { fn.apply(scope, arguments); }; },
+	
 	/* == */
 	key:function( id )
 	{
 		this.chosenHotkey = id;
-		document.onkeyup = this.onKeyDown;
+		//document.onkeyup = function () { NME.FullScreen.onKeyDown.apply(this, arguments); };
+		document.onkeyup = this.rescope( this, this.onKeyDown ) ;
 	}
 
 };

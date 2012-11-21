@@ -15,9 +15,9 @@
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
-    <class path="src/flash" />
+    <class path="src/haxe" />
     <class path="lib" />
-    <class path="bin/flash/haxe" />
+    <class path="bin/html5/web/haxe" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -25,7 +25,7 @@
     <option flashStrict="False" />
     <option mainClass="ApplicationMain" />
     <option enabledebug="True" />
-    <option additional="-swf-version 10.1" />
+    <option additional="--dead-code-elimination&#xA;--js-modern&#xA;--remap flash:nme&#xA;--js-modern" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>

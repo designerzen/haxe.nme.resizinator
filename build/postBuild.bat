@@ -2,8 +2,13 @@ set DEPLOY_DIR=%CD%
 set APP_NAME=%1
 
 rem First copy the appropriate files to deploy
+echo Deleting Deploy directory
+DEL %DEPLOY_DIR%\deploy /q /s /a  
+DIR %DEPLOY_DIR%\deploy\ /A:H /B
+RMDIR %DEPLOY_DIR%\deploy /Q 
+
 echo Creating directory tree
-DEL %DEPLOY_DIR%\deploy /q
+
 XCOPY %DEPLOY_DIR%\src\html %DEPLOY_DIR%\deploy /i /e /t /y
 
 echo Adding support files and dependencies
@@ -31,7 +36,7 @@ echo Shrinking Javascript Files
 
 haxelib run jsmin %DEPLOY_DIR%\deploy\js\nme.embed.js %DEPLOY_DIR%\deploy\js\nme.embed.js
 haxelib run jsmin %DEPLOY_DIR%\deploy\js\nme.fullscreen.js %DEPLOY_DIR%\deploy\js\nme.fullscreen.js
-haxelib run jsmin %DEPLOY_DIR%\deploy\js\nme.application.js %DEPLOY_DIR%\deploy\js\nme.application.js
+rem haxelib run jsmin %DEPLOY_DIR%\deploy\js\nme.application.js %DEPLOY_DIR%\deploy\js\nme.application.js
 
 
 rem then overwrite any that don't already exist into dist
