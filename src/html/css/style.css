@@ -34,7 +34,14 @@ html:fullscreen #haxe.resize{
 	margin: 0 auto;
 }
 
+body.fullscreen #Root_MovieClip{
+	visibility:hidden;
+}
+#Root_MovieClip{
+	visibility:visible;
+}
  /* == Some background colours  */
+}
 .dark{
 	background-color: #000000;
 }
