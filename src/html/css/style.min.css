@@ -4,5 +4,5 @@ body.fullsize,html{padding:0;margin:0;}
 .fullsize.preloading{background:transparent url(../img/loader.gif) no-repeat no-repeat center center;}
 #haxe:jeash{display:block;visibility:visible}
 #haxe:trace{position:absolute;z-index:2147483647;}
-body.fullscreen #haxe.resize,html:-moz-full-screen #haxe.resize,html:-webkit-full-screen #haxe.resize,html:fullscreen #haxe.resize{}
+body.fullscreen #haxe.resize,html:-moz-full-screen #haxe.resize,html:-webkit-full-screen #haxe.resize,html:fullscreen #haxe.resize{margin:0 auto;}
 .dark{background-color:#000000;}

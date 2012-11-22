@@ -6,6 +6,8 @@
 	using either ExternalInterface or internal Jeash or even a DOM element
 	you can bind a hotkey with the key().bind()
 
+	works in Firefox 10, Safari and Chrome
+	
 ///////////////////////////////////////////////////////////////////////////*/
 
 // create our global Class Object
