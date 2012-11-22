@@ -11,8 +11,9 @@ body.fullsize, html{
 	bottom:0;
 	display:block
 }
+
  /* == Added before app loaded to highlight preloading */
-.fullsize.preloading{
+body.preloading{
 	background:transparent url(../img/loader.gif) no-repeat no-repeat center center;
 }
 
@@ -33,15 +34,14 @@ html:fullscreen #haxe.resize{
 	/*background-color: #000000;*/
 	margin: 0 auto;
 }
-
-body.fullscreen #Root_MovieClip{
+/* fixes firefox bug */
+body.fullscreen #haxe:jeash #Root_MovieClip{
 	visibility:hidden;
 }
-#Root_MovieClip{
+#haxe:jeash #Root_MovieClip{
 	visibility:visible;
 }
+
  /* == Some background colours  */
-}
-.dark{
-	background-color: #000000;
+body.black{		background-color: #000000; }
 }
